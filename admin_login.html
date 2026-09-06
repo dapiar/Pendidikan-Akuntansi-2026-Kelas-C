@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin - Absensi</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="header">
+    <h1>Login Admin</h1>
+    <p>Absensi Pendidikan Akuntansi 2026 - Kelas C</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      {% if error %}
+        <div class="alert alert-error">{{ error }}</div>
+      {% endif %}
+
+      <h2>Masuk Sebagai Admin</h2>
+      <form action="{{ url_for('admin_login') }}" method="POST">
+        <label for="password">Password Admin</label>
+        <input type="password" id="password" name="password" required autofocus>
+        <button type="submit" class="btn">Masuk</button>
+      </form>
+    </div>
+
+    <p class="footer-note">
+      <a href="{{ url_for('index') }}" style="color: var(--abu);">&larr; Kembali ke Form Absensi</a>
+    </p>
+  </div>
+
+</body>
+</html>

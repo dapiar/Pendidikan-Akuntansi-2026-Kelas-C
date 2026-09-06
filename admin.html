@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rekap Absensi - Admin</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="header">
+    <h1>Rekap Absensi {{ kelas_label }}</h1>
+    <p>Dashboard Admin</p>
+  </div>
+
+  <div class="admin-wrap">
+
+    <div class="admin-topbar">
+      <form action="{{ url_for('admin_dashboard') }}" method="GET">
+        <label style="margin:0; font-size:0.85rem;">Tanggal:</label>
+        <input type="date" name="tanggal" value="{{ tanggal }}" style="width:auto; padding:8px 10px;">
+        <button type="submit" class="btn btn-outline" style="width:auto; margin:0; padding:8px 16px;">Tampilkan</button>
+      </form>
+
+      <span class="badge">Total Hadir: {{ total }}</span>
+
+      <div style="display:flex; gap:8px;">
+        <a href="{{ url_for('admin_export', tanggal=tanggal) }}" class="btn btn-secondary" style="width:auto; margin:0; padding:10px 16px;">
+          &#11015; Export Excel (.xlsx)
+        </a>
+        <a href="{{ url_for('admin_logout') }}" class="btn btn-outline" style="width:auto; margin:0; padding:10px 16px;">
+          Keluar
+        </a>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      {% if rows %}
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama</th>
+            <th>NIM</th>
+            <th>Gmail</th>
+            <th>Tanggal</th>
+            <th>Jam</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ row['nama'] }}</td>
+            <td>{{ row['nim'] }}</td>
+            <td>{{ row['gmail'] }}</td>
+            <td>{{ row['tanggal'] }}</td>
+            <td>{{ row['jam'] }}</td>
+            <td><span class="status-pill">{{ row['status'] }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <div class="empty-state">
+          Belum ada data absensi untuk tanggal <strong>{{ tanggal }}</strong>.
+        </div>
+      {% endif %}
+    </div>
+
+    <p class="footer-note">
+      <a href="{{ url_for('index') }}" style="color: var(--abu);">&larr; Kembali ke Form Absensi</a>
+    </p>
+  </div>
+
+</body>
+</html>
