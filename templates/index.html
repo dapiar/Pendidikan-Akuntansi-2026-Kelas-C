@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absensi {{ kelas_label }}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="header">
+    <h1>Absensi {{ kelas_label }}</h1>
+    <p>Silakan isi form di bawah untuk mencatat kehadiran hari ini</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+
+      {% if success %}
+        <div class="alert alert-success">
+          <span class="big-check">&#9989;</span>
+          <strong>Absensi berhasil!</strong><br>
+          Terima kasih, <strong>{{ nama }}</strong>.<br>
+          Tercatat hadir pada {{ tanggal }} pukul {{ jam }}.
+        </div>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Isi Absen Lain</a>
+      {% else %}
+
+        {% if errors %}
+          <div class="alert alert-error">
+            <ul class="error-list">
+              {% for e in errors %}
+                <li>{{ e }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <h2>Form Absensi Mahasiswa</h2>
+        <form action="{{ url_for('submit') }}" method="POST" novalidate>
+
+          <label for="gmail">Gmail</label>
+          <input
+            type="email"
+            id="gmail"
+            name="gmail"
+            placeholder="namaanda@gmail.com"
+            value="{{ old.gmail if old else '' }}"
+            required
+          >
+          <small class="hint">Wajib menggunakan email @gmail.com</small>
+
+          <label for="nama">Nama Lengkap</label>
+          <input
+            type="text"
+            id="nama"
+            name="nama"
+            placeholder="Contoh: Siti Aminah"
+            value="{{ old.nama if old else '' }}"
+            required
+          >
+
+          <label for="nim">NIM</label>
+          <input
+            type="text"
+            id="nim"
+            name="nim"
+            inputmode="numeric"
+            pattern="\d{10}"
+            maxlength="10"
+            placeholder="10 digit angka"
+            value="{{ old.nim if old else '' }}"
+            required
+          >
+          <small class="hint">Harus tepat 10 digit angka, tanpa spasi/huruf</small>
+
+          <button type="submit" class="btn">Submit Absen</button>
+        </form>
+
+      {% endif %}
+
+    </div>
+
+    <p class="footer-note">
+      &copy; {{ 2026 }} &middot; Absensi {{ kelas_label }} &middot;
+      <a href="{{ url_for('admin_login') }}" style="color: var(--abu);">Admin</a>
+    </p>
+  </div>
+
+  <script>
+    // Cegah karakter non-angka di field NIM secara real-time
+    const nimInput = document.getElementById('nim');
+    if (nimInput) {
+      nimInput.addEventListener('input', function () {
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+      });
+    }
+  </script>
+
+</body>
+</html>￼Enter
