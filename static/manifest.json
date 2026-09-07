@@ -1,0 +1,23 @@
+{
+  "name": "Absensi Pendidikan Akuntansi 2026 - Kelas C",
+  "short_name": "Absensi Akuntansi",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#e8f1fc",
+  "theme_color": "#0d3b78",
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
